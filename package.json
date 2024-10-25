@@ -1,0 +1,12 @@
+{
+  "name": "cemantix-headstart",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "type": "module",
+  "dependencies": {
+    "ofetch": "^1.4.1",
+    "smol-toml": "^1.3.0"
+  }
+}

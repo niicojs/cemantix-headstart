@@ -1,0 +1,3 @@
+[telegram]
+token="token to get from @fatherbot"
+chatId=1111 # id of user or group
