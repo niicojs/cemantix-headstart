@@ -3,12 +3,14 @@ import { readFileSync } from 'fs';
 import { checkWord } from './cemantix.js';
 import Telegram from './telegram.js';
 import getConfig from './config.js';
-import path from 'path';
+
+console.info('**********************');
+console.info('* CEMANTIX HEADSTART *');
+console.info('**********************');
 
 const config = getConfig();
 // console.log(config);
 
-const wordsfile = path.join(import.meta.dirname, 'wordlist.txt');
 const words = readFileSync(wordsfile, 'utf-8')
   .split(/\r?\n/)
   .filter((w) => w && w.length > 2)
@@ -51,4 +53,4 @@ message += `[cémantix](https://cemantix.certitudes.org)\n`;
 
 telegram.sendMessage(message);
 
-console.log('Done.');
+console.info('Done.');

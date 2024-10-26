@@ -11,7 +11,10 @@ export default function getConfig() {
     },
   });
 
-  let config = { home: values.home };
+  let config = {
+    home: values.home,
+    wordslist: path.join(import.meta.dirname, 'wordlist.txt'),
+  };
 
   const configFile = path.join(values.home, 'config.toml');
   if (existsSync(configFile)) {
@@ -19,6 +22,8 @@ export default function getConfig() {
       ...config,
       ...parseToml(readFileSync(configFile, 'utf-8')),
     };
+  } else {
+    console.warn('Configuration introuvable.');
   }
 
   return config;
