@@ -3,11 +3,13 @@ import { readFileSync } from 'fs';
 import { checkWord } from './cemantix.js';
 import Telegram from './telegram.js';
 import getConfig from './config.js';
+import path from 'path';
 
 const config = getConfig();
 // console.log(config);
 
-const words = readFileSync('./wordlist.txt', 'utf-8')
+const wordsfile = path.join(import.meta.dirname, 'wordlist.txt');
+const words = readFileSync(wordsfile, 'utf-8')
   .split(/\r?\n/)
   .filter((w) => w && w.length > 2)
   .map((w) => w.trim().toLowerCase());
@@ -45,7 +47,8 @@ let message = '*Cemantix Headstart*\n';
 for (const { word, percentile } of interesting) {
   message += `${percentile.toString().padStart(4, ' ')} \\- ${word}\n`;
 }
-console.log(message);
+message += `[cémantix](https://cemantix.certitudes.org)\n`;
+
 telegram.sendMessage(message);
 
 console.log('Done.');
