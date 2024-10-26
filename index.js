@@ -45,11 +45,11 @@ for (const word of words) {
 interesting.sort((a, b) => b.score - a.score);
 
 const telegram = Telegram(config);
-let message = '*Cemantix Headstart*\n';
+let message = '[Cémantix Headstart](https://cemantix.certitudes.org)\n';
 for (const { word, percentile } of interesting) {
   message += `${percentile.toString().padStart(4, ' ')} \\- ${word}\n`;
 }
-message += `[cémantix](https://cemantix.certitudes.org)\n`;
+// message += `[cémantix](https://cemantix.certitudes.org)\n`;
 
 telegram.sendMessage(message);
 
