@@ -4,14 +4,14 @@ import { checkWord } from './cemantix.js';
 import Telegram from './telegram.js';
 import getConfig from './config.js';
 
-console.info('**********************');
-console.info('* CEMANTIX HEADSTART *');
-console.info('**********************');
+console.info('┌────────────────────┐');
+console.info('│ CEMANTIX HEADSTART │');
+console.info('└────────────────────┘');
 
 const config = getConfig();
 // console.log(config);
 
-const words = readFileSync(wordsfile, 'utf-8')
+const words = readFileSync(config.wordsfile, 'utf-8')
   .split(/\r?\n/)
   .filter((w) => w && w.length > 2)
   .map((w) => w.trim().toLowerCase());

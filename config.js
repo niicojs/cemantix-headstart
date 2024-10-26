@@ -13,7 +13,7 @@ export default function getConfig() {
 
   let config = {
     home: values.home,
-    wordslist: path.join(import.meta.dirname, 'wordlist.txt'),
+    wordsfile: path.join(import.meta.dirname, 'wordlist.txt'),
   };
 
   const configFile = path.join(values.home, 'config.toml');
