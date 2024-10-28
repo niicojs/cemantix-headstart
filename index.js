@@ -47,9 +47,9 @@ interesting.sort((a, b) => b.score - a.score);
 const telegram = Telegram(config);
 let message = '[Cémantix Headstart](https://cemantix.certitudes.org)\n';
 for (const { word, percentile } of interesting) {
-  message += `${percentile.toString().padStart(4, ' ')} \\- ${word}\n`;
+  const w = telegram.escape(word);
+  message += `${percentile.toString().padStart(4, ' ')} \\- ${w}}\n`;
 }
-// message += `[cémantix](https://cemantix.certitudes.org)\n`;
 
 telegram.sendMessage(message);
 
