@@ -48,7 +48,7 @@ const telegram = Telegram(config);
 let message = '[Cémantix Headstart](https://cemantix.certitudes.org)\n';
 for (const { word, percentile } of interesting) {
   const w = telegram.escape(word);
-  message += `${percentile.toString().padStart(4, ' ')} \\- ${w}}\n`;
+  message += `${percentile.toString().padStart(4, ' ')} \\- ${w}\n`;
 }
 
 telegram.sendMessage(message);
