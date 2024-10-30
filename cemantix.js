@@ -7,6 +7,8 @@ export const client = ofetch.create({
     Origin: 'https://cemantix.certitudes.org',
   },
   method: 'POST',
+  retry: 3,
+  retryDelay: 1000,
 });
 
 export async function checkWord(word) {

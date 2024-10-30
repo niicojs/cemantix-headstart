@@ -11,6 +11,8 @@ console.info('└────────────────────┘
 const config = getConfig();
 // console.log(config);
 
+const telegram = Telegram(config);
+
 const words = readFileSync(config.wordsfile, 'utf-8')
   .split(/\r?\n/)
   .filter((w) => w && w.length > 2)
@@ -32,25 +34,36 @@ shuffle(words);
 
 const interesting = [];
 
-for (const word of words) {
-  const res = await checkWord(word);
-  if (res.percentile && res.percentile > 0) {
-    console.log(res.percentile, word);
-    interesting.push({ word, ...res });
-    if (res.percentile > 600) break;
+try {
+  for (const word of words) {
+    const res = await checkWord(word);
+    if (res.percentile && res.percentile > 0) {
+      console.log(res.percentile, word);
+      interesting.push({ word, ...res });
+      if (res.percentile > 600) break;
+    }
+    await sleep(80);
   }
-  await sleep(80);
+
+  interesting.sort((a, b) => b.score - a.score);
+
+  let message = '[Cémantix Headstart](https://cemantix.certitudes.org)\n';
+  for (const { word, percentile } of interesting) {
+    const w = telegram.escape(word);
+    message += `${percentile.toString().padStart(4, ' ')} \\- ${w}\n`;
+  }
+
+  telegram.sendMessage(message);
+} catch (e) {
+  let message = '[Cémantix Headstart](https://cemantix.certitudes.org)\n';
+  for (const { word, percentile } of interesting) {
+    const w = telegram.escape(word);
+    message += `${percentile.toString().padStart(4, ' ')} \\- ${w}\n`;
+  }
+
+  message += '\n*ERROR*\n' + e.message;
+
+  telegram.sendMessage(message);
 }
-
-interesting.sort((a, b) => b.score - a.score);
-
-const telegram = Telegram(config);
-let message = '[Cémantix Headstart](https://cemantix.certitudes.org)\n';
-for (const { word, percentile } of interesting) {
-  const w = telegram.escape(word);
-  message += `${percentile.toString().padStart(4, ' ')} \\- ${w}\n`;
-}
-
-telegram.sendMessage(message);
 
 console.info('Done.');
