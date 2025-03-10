@@ -1,8 +1,8 @@
 import path from 'node:path';
 import { parseArgs } from 'node:util';
-import { readFileSync } from 'fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { parse as parseToml } from 'smol-toml';
-import { existsSync } from 'node:fs';
+import { ProxyAgent, setGlobalDispatcher } from 'undici';
 
 export default function getConfig() {
   const { values } = parseArgs({
@@ -24,6 +24,15 @@ export default function getConfig() {
     };
   } else {
     console.warn('Configuration introuvable.');
+  }
+
+  if (config.proxy?.url) {
+    console.log('Set proxy: ' + config.proxy.url);
+    const proxyAgent = new ProxyAgent({
+      uri: config.proxy.url,
+      requestTls: { rejectUnauthorized: false },
+    });
+    setGlobalDispatcher(proxyAgent);
   }
 
   return config;
